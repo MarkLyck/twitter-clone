@@ -7,16 +7,18 @@ import LoginView from './views/loginView'
 import SignupView from './views/signupView'
 import HeaderView from './views/HeaderView'
 
-import NewTweetView from './views/NewTweetView'
+import NewTweetView from './views/newTweetView'
+import EditTweetView from './views/editTweetView'
 import FeedView from './views/feedView'
 
 const Router = Backbone.Router.extend({
   routes: {
-    login   : 'login',
-    signup  : 'signup',
-    feed    : 'feed',
-    newTweet: 'newTweet',
-    '/*'    : 'login'
+    login       : 'login',
+    signup      : 'signup',
+    feed        : 'feed',
+    newTweet    : 'newTweet',
+    'edit/:id'  : 'editTweet',
+    '/*'        : 'login'
   },
   login: function() {
     if (store.session.authtoken) {
@@ -43,6 +45,12 @@ const Router = Backbone.Router.extend({
     let newTweetView = new NewTweetView()
     newTweetView.render();
     $('#container').append(newTweetView.$el)
+  },
+  editTweet: function(id) {
+    console.log('RENDER EDITTWEET VIEW');
+    let editTweetView = new EditTweetView(id)
+    editTweetView.render()
+    $('#container').append(editTweetView.$el)
   }
 });
 
