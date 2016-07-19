@@ -12,6 +12,7 @@ import EditTweetView from './views/editTweetView'
 import FeedView from './views/feedView'
 
 import ProfileView from './views/profileView'
+import EditProfileView from './views/editProfileView'
 
 const Router = Backbone.Router.extend({
   routes: {
@@ -21,6 +22,7 @@ const Router = Backbone.Router.extend({
     newTweet          : 'newTweet',
     'edit/:id'        : 'editTweet',
     'user/:username'  : 'profile',
+    'user/:username/edit' : 'editProfile',
     '/*'              : 'feed'
   },
   login: function() {
@@ -65,6 +67,11 @@ const Router = Backbone.Router.extend({
     let profileView = new ProfileView(username)
     // profileView.render()
     $('#container').empty().append(headerView.$el).append(profileView.$el)
+  },
+  editProfile: function() {
+    let editProfileView = new EditProfileView()
+    editProfileView.render()
+    $('#container').append(editProfileView.$el)
   }
 });
 
