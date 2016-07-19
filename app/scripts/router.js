@@ -1,6 +1,8 @@
 import $ from 'jquery'
 import Backbone from 'backbone'
 
+import store from './store'
+
 import LoginView from './views/loginView'
 import SignupView from './views/signupView'
 import HeaderView from './views/HeaderView'
@@ -13,9 +15,13 @@ const Router = Backbone.Router.extend({
     '/*'    : 'login'
   },
   login: function() {
-    let loginView = new LoginView()
-    loginView.render();
-    $('#container').empty().append(loginView.$el)
+    if (store.session.authtoken) {
+      router.navigate('feed', {trigger:true})
+    } else {
+      let loginView = new LoginView()
+      loginView.render();
+      $('#container').empty().append(loginView.$el)
+    }
   },
   signup: function() {
     let signupView = new SignupView()

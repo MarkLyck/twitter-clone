@@ -3,7 +3,7 @@ import Backbone from 'backbone'
 import store from '../store'
 import router from '../router'
 
-import session from '../models/session'
+// import session from '../models/session'
 
 const HeaderView = Backbone.View.extend({
   tagName: 'header',
@@ -19,10 +19,11 @@ const HeaderView = Backbone.View.extend({
     'click #logout-btn': 'logout'
   },
   logout: function() {
-    session.save(null, {
+    console.log(store.session);
+    store.session.save(null, {
       url: `https://baas.kinvey.com/user/${store.settings.appKey}/_logout`,
       success: function() {
-        session.clear()
+        store.session.clear()
         console.log('You logged out');
         router.navigate('login', {trigger:true})
       }

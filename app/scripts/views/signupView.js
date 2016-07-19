@@ -3,7 +3,7 @@ import Backbone from 'backbone'
 import router from '../router'
 import store from '../store'
 
-import session from '../models/session'
+// import session from '../models/session'
 
 
 const LoginView = Backbone.View.extend({
@@ -29,7 +29,7 @@ const LoginView = Backbone.View.extend({
     let username = this.$('#username-input').val()
     let password = this.$('#password-input').val()
 
-    session.save({
+    store.session.save({
       username: username,
       password: password
     },
@@ -38,6 +38,7 @@ const LoginView = Backbone.View.extend({
       success: function(model, response, xhr) {
         model.unset('password')
         router.navigate('feed', {trigger: true})
+        sessionStorage.session = JSON.stringify(store.session)
       },
       error: function(model, response) {
         console.log('ERROR: ', arguments);

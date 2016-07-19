@@ -1,8 +1,8 @@
 import Backbone from 'backbone'
-import store from '../store'
+// import store from '../store'
 
 const Session = Backbone.Model.extend({
-  urlRoot: `https://baas.kinvey.com/user/${store.settings.appKey}/login`,
+  urlRoot: `https://baas.kinvey.com/user/kid_By1OAAow/login`,
   defaults: {
     username: ''
   },
@@ -17,6 +17,6 @@ const Session = Backbone.Model.extend({
   }
 })
 
-let session = new Session()
+// let session = new Session()
 
-export default session
+export default Session
