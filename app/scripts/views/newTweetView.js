@@ -25,13 +25,14 @@ const NewTweetView = Backbone.View.extend({
   publishTweet: function(e) {
     let bodyText = this.$('#tweet-textarea').val()
     tweetsCollection.create({
+      fullName: store.session.get('fullName'),
       username: store.session.get('username'),
       body: bodyText
     }, {
       success: function() {
-        console.log('SUCCESFUL TWEET')
         router.navigate('feed', {trigger:true})
-      }
+      },
+      wait:true,
     })
   },
   render: function() {

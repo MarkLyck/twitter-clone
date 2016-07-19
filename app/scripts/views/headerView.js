@@ -19,18 +19,15 @@ const HeaderView = Backbone.View.extend({
     'click #new-tweet' : 'newTweet'
   },
   logout: function() {
-    console.log(store.session);
     store.session.save(null, {
       url: `https://baas.kinvey.com/user/${store.settings.appKey}/_logout`,
       success: function() {
         store.session.clear()
-        console.log('You logged out');
         router.navigate('login', {trigger:true})
       }
     })
   },
   newTweet: function() {
-    console.log('NEW TWEET!');
     router.navigate('newTweet', {trigger:true})
   },
   render: function() {

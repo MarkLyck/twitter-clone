@@ -21,9 +21,7 @@ const FeedView = Backbone.View.extend({
   },
   render: function() {
     this.$el.html(this.template())
-    console.log('col: ', tweetsCollection);
     tweetsCollection.forEach(tweet => {
-      console.log('Tweet: ', tweet);
       let singleTweetView = new SingleTweetView({model:tweet})
       singleTweetView.render()
       this.$('#tweet-list').append(singleTweetView.$el)

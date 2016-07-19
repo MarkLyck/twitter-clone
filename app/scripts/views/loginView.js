@@ -34,7 +34,6 @@ const LoginView = Backbone.View.extend({
       success: function(model, response, xhr) {
         model.unset('password')
         router.navigate('feed', {trigger: true})
-        console.log(store.session);
         sessionStorage.session = JSON.stringify(store.session)
       },
       error: function(model, response) {

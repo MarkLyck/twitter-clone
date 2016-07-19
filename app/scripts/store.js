@@ -9,6 +9,4 @@ let store = {
   session: new Session()
 }
 
-console.log('TEST: ', store.session);
-
 export default store

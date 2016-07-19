@@ -33,7 +33,6 @@ const Router = Backbone.Router.extend({
     $('#container').empty().append(signupView.$el)
   },
   feed: function() {
-    console.log('RENDERING TWEETER FEED');
     let headerView = new HeaderView()
     headerView.render()
     let feedView = new FeedView()

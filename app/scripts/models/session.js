@@ -10,6 +10,7 @@ const Session = Backbone.Model.extend({
       return {
         authtoken: response._kmd.authtoken,
         username: response.username,
+        fullName: response.fullName,
         userId: response._id
       }
     }
