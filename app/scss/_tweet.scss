@@ -1,0 +1,25 @@
+.tweet-item {
+  display: flex;
+  flex-direction: column;
+  background: #fff;
+  padding: 20px;
+  color: $primary-text-color;
+  .tweet-info {
+    display: flex;
+    align-items: center;
+    h5 {
+      color: $secondary-text-color;
+      margin-left: 5px;
+      font-weight: normal;
+    }
+  }
+  p {
+    padding: 15px 0;
+  }
+  .tweet-options {
+    button {
+      width: 10%;
+      text-align: left;
+    }
+  }
+}

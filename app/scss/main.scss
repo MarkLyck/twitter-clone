@@ -1,0 +1,82 @@
+@import "../../node_modules/normalize-scss/sass/normalize/import-now";
+@import "variables";
+@import "login";
+@import "header";
+@import "feed";
+@import "tweet";
+
+body {
+  background: $primary-background;
+}
+
+h1,h2,h3,h4,h5,h6,p {
+  margin: 0;
+  padding: 0;
+}
+
+ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+button, input {
+  outline: none;
+}
+
+button {
+  background: none;
+  color: $deselected-color;
+  border: none;
+  padding: 5px;
+  &:hover {
+    cursor: pointer;
+    color: $primary-color;
+  }
+}
+
+.blue-button {
+  background: $primary-color;
+  color: #fff;
+  border: none;
+  border-radius: 5px;
+  padding: 5px;
+  transition: background 500ms;
+  &:hover {
+    color: #fff;
+    cursor: pointer;
+    background: $primary-hover;
+  }
+}
+
+.outline-button {
+  border: 1px solid $deselected-color;
+  border-radius: 5px;
+  &:hover {
+    border: 1px solid $primary-color;
+  }
+}
+
+.logo {
+  color: $primary-color;
+}
+
+#modal-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: fixed;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  background: rgba(0,0,0,0.8);
+  .modal {
+    background: #fff;
+    color: $primary-text-color;
+    // padding: 20px;
+    border-radius: 5px;
+    h3 {
+      padding: 40px;
+    }
+  }
+}

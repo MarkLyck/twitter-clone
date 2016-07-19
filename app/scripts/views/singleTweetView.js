@@ -10,14 +10,15 @@ const SingleTweetView = Backbone.View.extend({
   className: 'tweet-item',
   template: function() {
     return `
-      <div>
+      <div class="tweet-info">
         <h3>${this.model.get('fullName')}</h3>
-        <h5>${this.model.get('username')}</h5>
-        <h5>${moment(this.model.get('_kmd').ect).format('MMM DD YYYY')}</h5>
+        <h5>@${this.model.get('username')}</h5>
+        <h5>${moment(this.model.get('_kmd').ect).format('MMM DD')}</h5>
       </div>
       <p>${this.model.get('body')}</p>
       <div class="tweet-options">
-        <button class="like-btn">Like</button>
+        <button class="reply-btn"><i class="fa fa-reply" aria-hidden="true"></i></button>
+        <button class="like-btn"><i class="fa fa-heart" aria-hidden="true"></i></button>
       </div>
     `
   },
@@ -37,8 +38,8 @@ const SingleTweetView = Backbone.View.extend({
     this.$el.html(this.template())
     if (this.model.get('username') === store.session.get('username')) {
       console.log('USERNAME MATCH');
-      let $delBtn = $(`<button class="del-btn">Delete</button>`)
-      let $editBtn = $(`<button class="edit-btn">Edit</button>`)
+      let $delBtn = $(`<button class="del-btn"><i class="fa fa-trash" aria-hidden="true"></i></button>`)
+      let $editBtn = $(`<button class="edit-btn"><i class="fa fa-pencil" aria-hidden="true"></i></button>`)
       this.$('.tweet-options').append($editBtn).append($delBtn)
     }
     return this

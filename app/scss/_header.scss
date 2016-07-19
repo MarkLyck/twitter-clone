@@ -1,0 +1,29 @@
+header {
+  height: 45px;
+  nav {
+    background: #fff;
+    height: 45px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    .logo {
+      font-size: 2rem;
+    }
+    .wrapper {
+      button {
+        height: 100%;
+        margin: 7px 10px 7px 0;
+        box-sizing: border-box;
+      }
+    }
+    #home {
+      background: none;
+      color: $deselected-color;
+      border-radius: 0;
+      border-bottom: 3px solid $primary-color;
+      width: 10%;
+      margin-bottom: 0;
+      height: 100%;
+    }
+  }
+}

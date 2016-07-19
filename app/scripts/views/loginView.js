@@ -12,8 +12,8 @@ const LoginView = Backbone.View.extend({
       <input id="username-input" type="text" placeholder="Username">
       <input id="password-input" type="password" placeholder="Password">
       <div class="wrapper">
-        <button id="login-btn">Login</button>
-        <button id="goto-signup">Signup</button>
+        <button id="login-btn" class="blue-button">Login</button>
+        <button id="goto-signup" class="outline-button">Signup</button>
       </div>
     </div>
     `

@@ -18,15 +18,19 @@ const Router = Backbone.Router.extend({
     feed        : 'feed',
     newTweet    : 'newTweet',
     'edit/:id'  : 'editTweet',
-    '/*'        : 'login'
+    '/*'        : 'feed'
   },
   login: function() {
     if (store.session.authtoken) {
       router.navigate('feed', {trigger:true})
     } else {
+      let headerView = new HeaderView()
+      headerView.render()
+      let feedView = new FeedView()
+      feedView.render()
       let loginView = new LoginView()
       loginView.render();
-      $('#container').empty().append(loginView.$el)
+      $('#container').empty().append(headerView.$el).append(feedView.$el).append(loginView.$el)
     }
   },
   signup: function() {
