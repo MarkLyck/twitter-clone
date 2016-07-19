@@ -11,7 +11,7 @@ const SingleTweetView = Backbone.View.extend({
   template: function() {
     return `
       <div class="tweet-info">
-        <h3>${this.model.get('fullName')}</h3>
+        <h3 class="tweet-user">${this.model.get('fullName')}</h3>
         <h5>@${this.model.get('username')}</h5>
         <h5>${moment(this.model.get('_kmd').ect).format('MMM DD')}</h5>
       </div>
@@ -24,20 +24,21 @@ const SingleTweetView = Backbone.View.extend({
   },
   events: {
     'click .del-btn': 'deleteTweet',
-    'click .edit-btn': 'editTweet'
+    'click .edit-btn': 'editTweet',
+    'click .tweet-user': 'gotoProfile'
   },
   deleteTweet: function() {
-    console.log('DEL TWEET');
     this.model.destroy()
   },
   editTweet: function() {
-    console.log('EDIT TWEET');
     router.navigate(`edit/${this.model.get('_id')}`, {trigger:true})
+  },
+  gotoProfile: function() {
+    router.navigate(`user/${this.model.get('username')}`, {trigger:true})
   },
   render: function() {
     this.$el.html(this.template())
     if (this.model.get('username') === store.session.get('username')) {
-      console.log('USERNAME MATCH');
       let $delBtn = $(`<button class="del-btn"><i class="fa fa-trash" aria-hidden="true"></i></button>`)
       let $editBtn = $(`<button class="edit-btn"><i class="fa fa-pencil" aria-hidden="true"></i></button>`)
       this.$('.tweet-options').append($editBtn).append($delBtn)

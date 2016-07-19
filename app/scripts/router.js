@@ -63,7 +63,7 @@ const Router = Backbone.Router.extend({
     let headerView = new HeaderView()
     headerView.render()
     let profileView = new ProfileView(username)
-    profileView.render()
+    // profileView.render()
     $('#container').empty().append(headerView.$el).append(profileView.$el)
   }
 });

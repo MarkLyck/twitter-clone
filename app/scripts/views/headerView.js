@@ -19,7 +19,8 @@ const HeaderView = Backbone.View.extend({
   events: {
     'click #logout-btn': 'logout',
     'click #new-tweet' : 'newTweet',
-    'click #goto-login': 'gotoLogin'
+    'click #goto-login': 'gotoLogin',
+    'click #home'       : 'gotoFeed'
   },
   logout: function() {
     store.session.save(null, {
@@ -35,6 +36,9 @@ const HeaderView = Backbone.View.extend({
   },
   gotoLogin: function() {
     router.navigate('login', {trigger:true})
+  },
+  gotoFeed: function() {
+    router.navigate('feed', {trigger:true})
   },
   render: function() {
     this.$el.html(this.template())
