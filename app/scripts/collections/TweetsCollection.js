@@ -9,4 +9,6 @@ let TweetsCollection = Backbone.Collection.extend({
   model: Tweet
 });
 
-export default TweetsCollection
+let tweetsCollection = new TweetsCollection()
+
+export default tweetsCollection

@@ -17,6 +17,7 @@ if (sessionStorage.session) {
   console.log('FOUND STORED TOKEN');
   // console.log(JSON.parse(sessionStorage.session).authtoken);
   store.session.set('authtoken', JSON.parse(sessionStorage.session).authtoken)
+  store.session.set('username', JSON.parse(sessionStorage.session).username)
 }
 
 Backbone.history.start()

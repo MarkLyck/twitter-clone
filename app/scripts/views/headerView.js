@@ -12,11 +12,13 @@ const HeaderView = Backbone.View.extend({
     <nav>
       <h3>Tweeter</h3>
       <button id="logout-btn">Logout</button>
+      <button id="new-tweet">Tweet!</button>
     </nav>
     `
   },
   events: {
-    'click #logout-btn': 'logout'
+    'click #logout-btn': 'logout',
+    'click #new-tweet' : 'newTweet'
   },
   logout: function() {
     console.log(store.session);
@@ -28,6 +30,10 @@ const HeaderView = Backbone.View.extend({
         router.navigate('login', {trigger:true})
       }
     })
+  },
+  newTweet: function() {
+    console.log('NEW TWEET!');
+    router.navigate('newTweet', {trigger:true})
   },
   render: function() {
     this.$el.html(this.template())
