@@ -1,3 +1,4 @@
+import $ from 'jquery'
 import Backbone from 'backbone'
 import moment from 'moment'
 
@@ -22,6 +23,13 @@ const SingleTweetView = Backbone.View.extend({
   },
   render: function() {
     this.$el.html(this.template())
+
+    if (this.model.get('username') === store.session.get('username')) {
+      console.log('USERNAME MATCH');
+      let $delBtn = $(`<button class="del-btn">Delete</button>`)
+
+      this.$('.tweet-options').append($delBtn)
+    }
     return this
   }
 })
