@@ -10,6 +10,7 @@ import SingleTweetView from './singleTweetView'
 const FeedView = Backbone.View.extend({
   initialize: function() {
     tweetsCollection.on('add', () => this.render())
+    tweetsCollection.on('remove', () => this.render())
     tweetsCollection.fetch()
   },
   id: 'feed-container',

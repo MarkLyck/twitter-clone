@@ -21,14 +21,31 @@ const SingleTweetView = Backbone.View.extend({
       </div>
     `
   },
+  events: {
+    'click .del-btn': 'deleteTweet'
+  },
+  deleteTweet: function() {
+    console.log('DEL TWEET');
+    this.model.destroy()
+    // this.model.save(null, {
+    //   url: `https://baas.kinvey.com/appdata/${store.settings.appKey}/tweets/`,
+    //   success: function(model, response, xhr) {
+    //     model.unset('password')
+    //     router.navigate('feed', {trigger: true})
+    //     sessionStorage.session = JSON.stringify(store.session)
+    //   },
+    //   error: function(model, response) {
+    //     console.log('ERROR: ', arguments);
+    //   }
+    // })
+  },
   render: function() {
     this.$el.html(this.template())
-
     if (this.model.get('username') === store.session.get('username')) {
       console.log('USERNAME MATCH');
       let $delBtn = $(`<button class="del-btn">Delete</button>`)
-
-      this.$('.tweet-options').append($delBtn)
+      let $editBtn = $(`<button class="edit-btn">Edit</button>`)
+      this.$('.tweet-options').append($editBtn).append($delBtn)
     }
     return this
   }
