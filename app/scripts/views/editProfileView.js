@@ -1,5 +1,6 @@
 import Backbone from 'backbone'
 import router from '../router'
+import store from '../store'
 
 
 
@@ -26,7 +27,34 @@ const EditProfileView = Backbone.View.extend({
     'click #cancel-edit-profile': 'cancel'
   },
   editProfile: function() {
-    router.navigate('feed', {trigger:true})
+
+
+
+    let userFullName = this.$('#edit-fullname-input').val()
+    let userLocation = this.$('#edit-location-input').val()
+    let userWebsite = this.$('#edit-website-input').val()
+    let userBD = this.$('#edit-birthday-input').val()
+    // console.log(store.session);
+    console.log(userFullName);
+    // console.log(profileUser);
+
+    store.session.save({
+      fullName: userFullName,
+      location: userLocation,
+      website: userWebsite,
+      birthday: userBD
+    },
+    {
+      type: 'PUT',
+      url: `https://baas.kinvey.com/user/${store.settings.appKey}/${store.session.get('userId')}`,
+      success: function(model, response, xhr) {
+        console.log(response);
+        router.navigate('feed', {trigger: true})
+      },
+      error: function(model, response) {
+        console.log('ERROR: ', arguments);
+      }
+    })
   },
   cancel: function() {
     router.navigate('feed', {trigger:true})

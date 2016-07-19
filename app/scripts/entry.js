@@ -16,6 +16,7 @@ if (sessionStorage.session) {
   store.session.set('authtoken', JSON.parse(sessionStorage.session).authtoken)
   store.session.set('username', JSON.parse(sessionStorage.session).username)
   store.session.set('fullName', JSON.parse(sessionStorage.session).fullName)
+  store.session.set('userId', JSON.parse(sessionStorage.session).userId)
 }
 
 Backbone.history.start()
