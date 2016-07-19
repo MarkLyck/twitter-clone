@@ -11,14 +11,17 @@ import NewTweetView from './views/newTweetView'
 import EditTweetView from './views/editTweetView'
 import FeedView from './views/feedView'
 
+import ProfileView from './views/profileView'
+
 const Router = Backbone.Router.extend({
   routes: {
-    login       : 'login',
-    signup      : 'signup',
-    feed        : 'feed',
-    newTweet    : 'newTweet',
-    'edit/:id'  : 'editTweet',
-    '/*'        : 'feed'
+    login             : 'login',
+    signup            : 'signup',
+    feed              : 'feed',
+    newTweet          : 'newTweet',
+    'edit/:id'        : 'editTweet',
+    'user/:username'  : 'profile',
+    '/*'              : 'feed'
   },
   login: function() {
     if (store.session.authtoken) {
@@ -55,6 +58,13 @@ const Router = Backbone.Router.extend({
     let editTweetView = new EditTweetView(id)
     editTweetView.render()
     $('#container').append(editTweetView.$el)
+  },
+  profile: function(username) {
+    let headerView = new HeaderView()
+    headerView.render()
+    let profileView = new ProfileView(username)
+    profileView.render()
+    $('#container').empty().append(headerView.$el).append(profileView.$el)
   }
 });
 
