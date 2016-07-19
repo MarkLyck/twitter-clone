@@ -76,6 +76,9 @@ const ProfileView = Backbone.View.extend({
       if (profileUser.get('username') === store.session.get('username')) {
         let $editProfileBtn = $(`<button id="edit-profile">Edit Profile</button>`)
         this.$('#profile-bar').append($editProfileBtn)
+      } else {
+        let $followBtn = $(`<button id="follow-user"><i class="fa fa-user-plus" aria-hidden="true"></i>Follow</button>`)
+        this.$('#profile-bar').append($followBtn)
       }
     }
 
