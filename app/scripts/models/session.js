@@ -1,5 +1,4 @@
 import Backbone from 'backbone'
-// import store from '../store'
 
 const Session = Backbone.Model.extend({
   urlRoot: `https://baas.kinvey.com/user/kid_By1OAAow/login`,

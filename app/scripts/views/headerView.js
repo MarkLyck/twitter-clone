@@ -3,8 +3,6 @@ import Backbone from 'backbone'
 import store from '../store'
 import router from '../router'
 
-// import session from '../models/session'
-
 const HeaderView = Backbone.View.extend({
   tagName: 'header',
   template: function() {

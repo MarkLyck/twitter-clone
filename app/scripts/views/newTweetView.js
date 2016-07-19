@@ -3,7 +3,7 @@ import Backbone from 'backbone'
 import router from '../router'
 import store from '../store'
 
-import tweetsCollection from '../collections/TweetsCollection'
+import tweetsCollection from '../collections/tweetsCollection'
 
 const NewTweetView = Backbone.View.extend({
   id: 'modal-container',

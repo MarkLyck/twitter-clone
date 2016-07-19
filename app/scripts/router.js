@@ -6,7 +6,9 @@ import store from './store'
 import LoginView from './views/loginView'
 import SignupView from './views/signupView'
 import HeaderView from './views/HeaderView'
+
 import NewTweetView from './views/NewTweetView'
+import FeedView from './views/feedView'
 
 const Router = Backbone.Router.extend({
   routes: {
@@ -33,11 +35,12 @@ const Router = Backbone.Router.extend({
   feed: function() {
     console.log('RENDERING TWEETER FEED');
     let headerView = new HeaderView()
-    headerView.render();
-    $('#container').empty().append(headerView.$el)
+    headerView.render()
+    let feedView = new FeedView()
+    feedView.render()
+    $('#container').empty().append(headerView.$el).append(feedView.$el)
   },
   newTweet: function() {
-    console.log('RENDERING NEW TWEET');
     let newTweetView = new NewTweetView()
     newTweetView.render();
     $('#container').append(newTweetView.$el)

@@ -3,8 +3,6 @@ import Backbone from 'backbone'
 import router from '../router'
 import store from '../store'
 
-// import session from '../models/session'
-
 
 const LoginView = Backbone.View.extend({
   id: 'modal-container',
@@ -12,6 +10,7 @@ const LoginView = Backbone.View.extend({
     return `
     <div class="signup-modal modal">
       <h3>Signup</h3>
+      <input id="full-name-input" type="text" placeholder="Full Name">
       <input id="username-input" type="text" placeholder="Username">
       <input id="password-input" type="password" placeholder="Password">
       <div class="wrapper">
@@ -26,10 +25,12 @@ const LoginView = Backbone.View.extend({
     'click #goto-login': 'gotoLogin'
   },
   signup: function(e) {
+    let fullName = this.$('#full-name-input').val()
     let username = this.$('#username-input').val()
     let password = this.$('#password-input').val()
 
     store.session.save({
+      fullName: fullName,
       username: username,
       password: password
     },

@@ -1,7 +1,6 @@
 import Backbone from 'backbone'
 
 import router from '../router'
-// import session from '../models/session'
 import store from '../store'
 
 const LoginView = Backbone.View.extend({
