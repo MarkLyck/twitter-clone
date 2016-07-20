@@ -1,13 +1,3 @@
-// Questions
-
-/* 1, user's can only crud on their own data.
-
-Because of this, you can't "like" someone elses post, or add your name to their "followers"
-How to get around this without setting the security to "Public"
-
-*/
-
-
 /* 3, how do you get models, based on a query in an array!?!?!?!
 
 E.g.
@@ -28,11 +18,14 @@ Users that aren't logged in, are also not allowed to read tweets :(
 
 
 import $ from 'jquery'
+import _ from 'underscore'
 import Backbone from 'backbone'
 import moment from 'moment'
 
 import router from '../router'
 import store from '../store'
+
+import Like from '../models/Like'
 
 const SingleTweetView = Backbone.View.extend({
   tagName: 'li',
@@ -69,20 +62,84 @@ const SingleTweetView = Backbone.View.extend({
     router.navigate(`user/${this.model.get('username')}`, {trigger:true})
   },
   likeTweet: function() {
-    let currentLikes = this.model.get('likes')
-    if (store.session.likes.indexOf(this.model.get('_id')) === -1) {
-      console.log('LIKE TWEET');
-      this.model.set('likes', currentLikes + 1)
-      this.model.save()
-    } else {
-      console.log('UNLIKE TWEET');
-      this.model.set('likes', currentLikes - 1)
-      this.model.save()
+    let currentLikes = 0
+    if (this.model.get('likes')._obj) {
+      currentLikes = this.model.get('likes')._obj.likes
     }
+
+    let like = new Like()
+    let currLikeObj = this.model.get('likes')
+
+    like.fetch({
+      url: `https://baas.kinvey.com/appdata/${store.settings.appKey}/likes/${currLikeObj._obj._id}`,
+      success: () => {
+        console.log('FETCHED LIKE');
+        console.log('store.session: ', store.session);
+        let newLikedArr = store.session.get('liked')
+        // If the user has liked something before:
+        if (store.session.get('liked')) {
+          console.log(store.session.get('liked'));
+          // If user hasn't already liked this tweet.
+          if (store.session.get('liked').indexOf(this.model.get('_id')) === -1) {
+            console.log('LIKE TWEET');
+            newLikedArr.push(this.model.get('_id'))
+            store.session.set('liked', newLikedArr)
+            store.session.save(null, {
+              type: 'PUT',
+              url: `https://baas.kinvey.com/user/${store.settings.appKey}/${store.session.get('userId')}`,
+              success: function(model, response, xhr) {
+                console.log('SAVED USER');
+              },
+              error: function(model, response) {
+                console.log('ERROR: ', arguments);
+              }
+            })
+            like.like()
+          } else {
+            console.log('UNLIKE TWEET');
+            console.log('liked before: ', newLikedArr);
+            newLikedArr = _.without(newLikedArr, this.model.get('_id'))
+            console.log('liked after: ', newLikedArr);
+            store.session.set('liked', newLikedArr)
+            store.session.save(null, {
+              type: 'PUT',
+              url: `https://baas.kinvey.com/user/${store.settings.appKey}/${store.session.get('userId')}`,
+              success: function(model, response, xhr) {
+                console.log('SAVED USER');
+              },
+              error: function(model, response) {
+                console.log('ERROR: ', arguments);
+              }
+            })
+            like.unlike()
+          }
+          // The user has never liked anything.
+        } else {
+          console.log('LIKE FIRST TWEET');
+          newLikedArr.push(this.model.get('_id'))
+          store.session.set('liked', newLikedArr)
+          store.session.save(null, {
+            type: 'PUT',
+            url: `https://baas.kinvey.com/user/${store.settings.appKey}/${store.session.get('userId')}`,
+            success: function(model, response, xhr) {
+              console.log('SAVED USER');
+            },
+            error: function(model, response) {
+              console.log('ERROR: ', arguments);
+            }
+          })
+          like.like()
+        }
+      },
+    })
+
+
   },
   render: function() {
     this.$el.html(this.template())
-    console.log(this.model);
+    if (this.model.get('likes')._obj) {
+      this.$('.like-btn').html(`${this.model.get('likes')._obj.likes} <i class="fa fa-heart" aria-hidden="true"></i>`)
+    }
     if (this.model.get('username') === store.session.get('username')) {
       let $delBtn = $(`<button class="del-btn"><i class="fa fa-trash" aria-hidden="true"></i></button>`)
       let $editBtn = $(`<button class="edit-btn"><i class="fa fa-pencil" aria-hidden="true"></i></button>`)

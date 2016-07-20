@@ -9,7 +9,7 @@ import SingleTweetView from './singleTweetView'
 
 const FeedView = Backbone.View.extend({
   initialize: function() {
-    tweetsCollection.on('add', () => this.render())
+    tweetsCollection.on('add', (model) => this.addTweet(model))
     tweetsCollection.on('remove', () => this.render())
 
     tweetsCollection.fetch()
@@ -28,11 +28,14 @@ const FeedView = Backbone.View.extend({
   render: function() {
     this.$el.html(this.template())
     tweetsCollection.forEach(tweet => {
-      let singleTweetView = new SingleTweetView({model:tweet})
-      singleTweetView.render()
-      this.$('#tweet-list').append(singleTweetView.$el)
+      this.addTweet(tweet)
     })
     return this
+  },
+  addTweet: function(tweet) {
+    let singleTweetView = new SingleTweetView({model:tweet})
+    singleTweetView.render()
+    this.$('#tweet-list').prepend(singleTweetView.$el)
   }
 })
 
