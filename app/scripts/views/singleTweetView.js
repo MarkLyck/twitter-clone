@@ -1,3 +1,44 @@
+// Questions
+
+/* 1, user's can only crud on their own data.
+
+Because of this, you can't "like" someone elses post, or add your name to their "followers"
+How to get around this without setting the security to "Public"
+
+*/
+
+
+
+/* 2 Can you have multiple collections of the same model? and is that acceptable?
+
+I have a collection of users, that I use to fetch the user's profile when you go there.
+But, I also need a list of all of that users followers.
+
+Should I make a followersCollection for this?
+
+*/
+
+
+
+/* 3, how do you get models, based on a query in an array!?!?!?!
+
+E.g.
+
+Following: ['nicerhugs', 'testy', 'someotherusername']
+
+I need to get those 3 users :(
+
+*/
+
+
+
+/* 4
+
+Users that aren't logged in, are also not allowed to read tweets :(
+
+*/
+
+
 import $ from 'jquery'
 import Backbone from 'backbone'
 import moment from 'moment'
@@ -23,9 +64,10 @@ const SingleTweetView = Backbone.View.extend({
     `
   },
   events: {
-    'click .del-btn': 'deleteTweet',
-    'click .edit-btn': 'editTweet',
-    'click .tweet-user': 'gotoProfile'
+    'click .del-btn'    : 'deleteTweet',
+    'click .edit-btn'   : 'editTweet',
+    'click .tweet-user' : 'gotoProfile',
+    'click .like-btn'   : 'likeTweet'
   },
   deleteTweet: function() {
     this.model.destroy()
@@ -35,6 +77,14 @@ const SingleTweetView = Backbone.View.extend({
   },
   gotoProfile: function() {
     router.navigate(`user/${this.model.get('username')}`, {trigger:true})
+  },
+  likeTweet: function() {
+    console.log('YOU LIKED TWEET');
+    console.log(store.session);
+    let currentLikes = this.model.get('likes')
+    this.model.set('likes', currentLikes+1)
+    this.model.save()
+    // console.log(this.model.get('likes'));
   },
   render: function() {
     this.$el.html(this.template())

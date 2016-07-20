@@ -37,7 +37,8 @@ const LoginView = Backbone.View.extend({
       username: username,
       password: password,
       followers: [],
-      following: []
+      following: [],
+      liked: []
     },
     {
       url: `https://baas.kinvey.com/user/${store.settings.appKey}/`,

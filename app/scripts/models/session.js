@@ -5,7 +5,8 @@ const Session = Backbone.Model.extend({
   defaults: {
     username: '',
     following: [],
-    followers: []
+    followers: [],
+    liked: []
   },
   parse: function(response) {
     if (response) {
@@ -13,6 +14,10 @@ const Session = Backbone.Model.extend({
         authtoken: response._kmd.authtoken,
         username: response.username,
         fullName: response.fullName,
+        email: response.email,
+        following: response.following,
+        followers: response.followers,
+        liked: response.liked,
         userId: response._id
       }
     }

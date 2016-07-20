@@ -12,7 +12,7 @@ import userCollection from '../collections/userCollection'
 
 const ProfileView = Backbone.View.extend({
   initialize: function(username) {
-    tweetsCollection.on('add', () => this.render())
+    // tweetsCollection.on('add', () => this.render())
     tweetsCollection.fetch({
       url: `https://baas.kinvey.com/appdata/${store.settings.appKey}/tweets/?query={"username":"${username}"}`,
     })
@@ -23,6 +23,7 @@ const ProfileView = Backbone.View.extend({
         this.render()
       }
     })
+    
 
   },
   id: 'profile-container',
@@ -151,7 +152,7 @@ const ProfileView = Backbone.View.extend({
         let $followBtn = $(`<button id="follow-user" class="blue-button"><i class="fa fa-user-plus" aria-hidden="true"></i> Follow</button>`)
         this.$('#profile-bar').append($followBtn)
       } else {
-        let $unFollowBtn = $(`<button id="unfollow-user" class="blue-button"><i class="fa fa-user-plus" aria-hidden="true"></i>Following</button>`)
+        let $unFollowBtn = $(`<button id="unfollow-user" class="blue-button">Following</button>`)
         this.$('#profile-bar').append($unFollowBtn)
       }
     }

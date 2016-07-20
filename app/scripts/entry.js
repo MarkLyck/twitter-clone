@@ -20,6 +20,7 @@ if (sessionStorage.session) {
   store.session.set('userId', JSON.parse(sessionStorage.session).userId)
   store.session.set('following', JSON.parse(sessionStorage.session).following)
   store.session.set('followers', JSON.parse(sessionStorage.session).followers)
+  store.session.set('liked', JSON.parse(sessionStorage.session).liked)
 }
 
 Backbone.history.start()
