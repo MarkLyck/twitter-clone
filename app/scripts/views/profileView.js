@@ -16,11 +16,9 @@ const ProfileView = Backbone.View.extend({
     tweetsCollection.fetch({
       url: `https://baas.kinvey.com/appdata/${store.settings.appKey}/tweets/?query={"username":"${username}"}`,
     })
-    // userCollection.on('add', () => this.render)
     userCollection.fetch({
       url: `https://baas.kinvey.com/user/${store.settings.appKey}/?query={"username":"${username}"}`,
       success: response => {
-        // This should be changed to this.model = response.models[0]
         this.model = response.models[0]
         this.render()
       }
@@ -139,11 +137,12 @@ const ProfileView = Backbone.View.extend({
       this.$('#profile-joined').text('Joined ' + moment(this.model.get('_kmd').ect).format('MMMM YYYY'))
 
       let $TweetNumber = $(`<h3>${tweetsCollection.length}</h3>`)
-      // let $FollowingNumber = $(`<h3>${profileUser.get('following').length}</h3>`)
+      let $FollowingNumber = $(`<h3>${this.model.get('following').length}</h3>`)
       // let $FollowersNumber = $(`<h3>${profileUser.get('followers').length}</h3>`)
       // let $LikesNumber = $(`<h3>${profileUser.get('likes').length}</h3>`)
 
       this.$('#profile-tweets').append($TweetNumber)
+      this.$('#profile-following').append($FollowingNumber)
 
       if (this.model.get('username') === store.session.get('username')) {
         let $editProfileBtn = $(`<button id="edit-profile">Edit Profile</button>`)
