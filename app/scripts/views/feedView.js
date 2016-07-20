@@ -17,6 +17,10 @@ const FeedView = Backbone.View.extend({
   id: 'feed-container',
   template: function() {
     return `
+    <div class="left user-box">
+      <div class="user-box-banner"></div>
+      <div class="user-box-banner"></div>
+    </div>
     <ul id="tweet-list">
     </ul>
     `

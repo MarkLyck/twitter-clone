@@ -3,6 +3,8 @@ import Backbone from 'backbone'
 import router from '../router'
 import store from '../store'
 
+import Like from '../models/Like'
+
 import tweetsCollection from '../collections/tweetsCollection'
 
 const NewTweetView = Backbone.View.extend({
@@ -24,7 +26,13 @@ const NewTweetView = Backbone.View.extend({
   },
   publishTweet: function(e) {
     let bodyText = this.$('#tweet-textarea').val()
-    tweetsCollection.create({
+    let like = new Like()
+    like.save(null, {
+      success: function() {
+        console.log('Saved a like');
+      }
+    })
+    tweetsCollection.create ({
       fullName: store.session.get('fullName'),
       username: store.session.get('username'),
       body: bodyText

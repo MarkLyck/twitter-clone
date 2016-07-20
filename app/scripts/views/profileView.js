@@ -24,8 +24,6 @@ const ProfileView = Backbone.View.extend({
         this.render()
       }
     })
-
-
   },
   id: 'profile-container',
   template: function() {
