@@ -28,20 +28,25 @@ const NewTweetView = Backbone.View.extend({
     let bodyText = this.$('#tweet-textarea').val()
     let like = new Like()
     like.save(null, {
-      success: function() {
-        console.log('Saved a like');
+      success: function(response) {
+        tweetsCollection.create ({
+          fullName: store.session.get('fullName'),
+          username: store.session.get('username'),
+          body: bodyText,
+          likes: {
+            _type: "KinveyRef",
+            _id: like.get('_id'),
+            _collection: 'likes'
+          }
+        }, {
+          success: function() {
+            router.navigate('feed', {trigger:true})
+          },
+          wait:true,
+        })
       }
     })
-    tweetsCollection.create ({
-      fullName: store.session.get('fullName'),
-      username: store.session.get('username'),
-      body: bodyText
-    }, {
-      success: function() {
-        router.navigate('feed', {trigger:true})
-      },
-      wait:true,
-    })
+
   },
   render: function() {
     this.$el.html(this.template())

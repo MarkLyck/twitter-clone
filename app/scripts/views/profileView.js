@@ -14,8 +14,12 @@ const ProfileView = Backbone.View.extend({
   initialize: function(username) {
     // tweetsCollection.on('add', () => this.render())
     tweetsCollection.reset()
+    console.log('FETCHING TWEETS');
     tweetsCollection.fetch({
       url: `https://baas.kinvey.com/appdata/${store.settings.appKey}/tweets/?query={"username":"${username}"}`,
+      success: () => {
+        this.render()
+      }
     })
     userCollection.fetch({
       url: `https://baas.kinvey.com/user/${store.settings.appKey}/?query={"username":"${username}"}`,

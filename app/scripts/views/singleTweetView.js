@@ -82,6 +82,7 @@ const SingleTweetView = Backbone.View.extend({
   },
   render: function() {
     this.$el.html(this.template())
+    console.log(this.model);
     if (this.model.get('username') === store.session.get('username')) {
       let $delBtn = $(`<button class="del-btn"><i class="fa fa-trash" aria-hidden="true"></i></button>`)
       let $editBtn = $(`<button class="edit-btn"><i class="fa fa-pencil" aria-hidden="true"></i></button>`)

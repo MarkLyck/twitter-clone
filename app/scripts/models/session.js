@@ -38,13 +38,8 @@ const Session = Backbone.Model.extend({
     })
   },
   retrieve: function() {
-    console.log('FETCHING USER');
     this.fetch({
       url: `https://baas.kinvey.com/user/${store.settings.appKey}/_me`,
-      success: function(response) {
-        console.log('FETCHED USER SUCCESSFULLY');
-        console.log(response);
-      },
       error: function(response) {
         throw new Error('FETCHING USER FAILED!')
       }
