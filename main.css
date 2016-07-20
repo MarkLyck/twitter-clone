@@ -394,18 +394,18 @@ optgroup {
 textarea {
   overflow: auto; }
 
-.login-modal {
+.login-modal, .signup-modal {
   display: flex;
   flex-direction: column;
   width: 60%; }
-  .login-modal input {
+  .login-modal input, .signup-modal input {
     padding: 20px; }
-  .login-modal .wrapper {
+  .login-modal .wrapper, .signup-modal .wrapper {
     display: flex;
     justify-content: space-around;
     margin-top: 20px;
     margin-bottom: 20px; }
-    .login-modal .wrapper button {
+    .login-modal .wrapper button, .signup-modal .wrapper button {
       width: 40%; }
 
 header {
@@ -439,6 +439,9 @@ header {
   background: #fff;
   padding: 20px;
   color: #292F33; }
+  .tweet-item .tweet-user:hover {
+    color: #339CC3;
+    cursor: pointer; }
   .tweet-item .tweet-info {
     display: flex;
     align-items: center; }
