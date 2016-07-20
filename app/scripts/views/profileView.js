@@ -10,8 +10,6 @@ import tweetsCollection from '../collections/tweetsCollection'
 import SingleTweetView from './singleTweetView'
 import userCollection from '../collections/userCollection'
 
-let profileUser;
-
 const ProfileView = Backbone.View.extend({
   initialize: function(username) {
     tweetsCollection.on('add', () => this.render())
@@ -22,7 +20,8 @@ const ProfileView = Backbone.View.extend({
     userCollection.fetch({
       url: `https://baas.kinvey.com/user/${store.settings.appKey}/?query={"username":"${username}"}`,
       success: response => {
-        profileUser = response.models[0]
+        // This should be changed to this.model = response.models[0]
+        this.model = response.models[0]
         this.render()
       }
     })
@@ -58,13 +57,13 @@ const ProfileView = Backbone.View.extend({
     'click #unfollow-user' : 'unFollowUser'
   },
   gotoEditProfile: function() {
-    router.navigate('user/' + profileUser.get('username')+'/edit', {trigger:true})
+    router.navigate('user/' + this.model.get('username')+'/edit', {trigger:true})
   },
   followUser: function() {
     let newFollowing = []
     if (store.session.get('following')) {
       newFollowing = store.session.get('following')
-      newFollowing.push(profileUser.get('username'))
+      newFollowing.push(this.model.get('username'))
       _.uniq(newFollowing)
       // store.session.set('following', _.uniq(newFollowing))
     }
@@ -110,7 +109,7 @@ const ProfileView = Backbone.View.extend({
   unFollowUser: function() {
     if (store.session.get('following')) {
       let newFollowing = store.session.get('following')
-      newFollowing = _.without(newFollowing, profileUser.get('username'))
+      newFollowing = _.without(newFollowing, this.model.get('username'))
 
       store.session.save({
           following: newFollowing
@@ -133,11 +132,11 @@ const ProfileView = Backbone.View.extend({
   render: function() {
     this.$el.html(this.template())
 
-    if (profileUser) {
-      this.$('#profile-full-name').text(profileUser.get('fullName'))
-      this.$('#profile-username').text('@' + profileUser.get('username'))
-      this.$('#profile-location').text(profileUser.get('location'))
-      this.$('#profile-joined').text('Joined ' + moment(profileUser.get('_kmd').ect).format('MMMM YYYY'))
+    if (this.model) {
+      this.$('#profile-full-name').text(this.model.get('fullName'))
+      this.$('#profile-username').text('@' + this.model.get('username'))
+      this.$('#profile-location').text(this.model.get('location'))
+      this.$('#profile-joined').text('Joined ' + moment(this.model.get('_kmd').ect).format('MMMM YYYY'))
 
       let $TweetNumber = $(`<h3>${tweetsCollection.length}</h3>`)
       // let $FollowingNumber = $(`<h3>${profileUser.get('following').length}</h3>`)
@@ -146,10 +145,10 @@ const ProfileView = Backbone.View.extend({
 
       this.$('#profile-tweets').append($TweetNumber)
 
-      if (profileUser.get('username') === store.session.get('username')) {
+      if (this.model.get('username') === store.session.get('username')) {
         let $editProfileBtn = $(`<button id="edit-profile">Edit Profile</button>`)
         this.$('#profile-bar').append($editProfileBtn)
-      } else if (store.session.get('following').indexOf(profileUser.get('username')) === -1){
+      } else if (store.session.get('following').indexOf(this.model.get('username')) === -1){
         let $followBtn = $(`<button id="follow-user" class="blue-button"><i class="fa fa-user-plus" aria-hidden="true"></i> Follow</button>`)
         this.$('#profile-bar').append($followBtn)
       } else {
