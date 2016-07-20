@@ -14,6 +14,9 @@ import FeedView from './views/feedView'
 import ProfileView from './views/profileView'
 import EditProfileView from './views/editProfileView'
 
+import tweetsCollection from './collections/tweetsCollection'
+import userCollection from './collections/userCollection'
+
 const Router = Backbone.Router.extend({
   routes: {
     login             : 'login',
@@ -44,6 +47,7 @@ const Router = Backbone.Router.extend({
     $('#container').empty().append(signupView.$el)
   },
   feed: function() {
+    tweetsCollection.off()
     let headerView = new HeaderView()
     headerView.render()
     let feedView = new FeedView()
@@ -62,6 +66,8 @@ const Router = Backbone.Router.extend({
     $('#container').append(editTweetView.$el)
   },
   profile: function(username) {
+    tweetsCollection.off()
+    userCollection.off()
     let headerView = new HeaderView()
     headerView.render()
     let profileView = new ProfileView(username)

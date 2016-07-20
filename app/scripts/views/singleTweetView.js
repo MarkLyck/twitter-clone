@@ -79,12 +79,16 @@ const SingleTweetView = Backbone.View.extend({
     router.navigate(`user/${this.model.get('username')}`, {trigger:true})
   },
   likeTweet: function() {
-    console.log('YOU LIKED TWEET');
-    console.log(store.session);
     let currentLikes = this.model.get('likes')
-    this.model.set('likes', currentLikes+1)
-    this.model.save()
-    // console.log(this.model.get('likes'));
+    if (store.session.likes.indexOf(this.model.get('_id')) === -1) {
+      console.log('LIKE TWEET');
+      this.model.set('likes', currentLikes + 1)
+      this.model.save()
+    } else {
+      console.log('UNLIKE TWEET');
+      this.model.set('likes', currentLikes - 1)
+      this.model.save()
+    }
   },
   render: function() {
     this.$el.html(this.template())
