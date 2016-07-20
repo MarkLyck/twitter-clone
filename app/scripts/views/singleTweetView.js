@@ -1,19 +1,18 @@
 /* 3, how do you get models, based on a query in an array!?!?!?!
 
-E.g.
+  E.g.
 
-Following: ['nicerhugs', 'testy', 'someotherusername']
+  Following: ['nicerhugs', 'testy', 'someotherusername']
 
-I need to get those 3 users :(
-
+  I need to get those 3 users :(
 */
 
 
 
+
+
 /* 4
-
-Users that aren't logged in, are also not allowed to read tweets :(
-
+  Users that aren't logged in, are also not allowed to read tweets :(
 */
 
 
@@ -73,26 +72,23 @@ const SingleTweetView = Backbone.View.extend({
     like.fetch({
       url: `https://baas.kinvey.com/appdata/${store.settings.appKey}/likes/${currLikeObj._obj._id}`,
       success: () => {
+        let numberOfLikes = like.get('likes')
         let newLikedArr = store.session.get('liked')
         // If the user has liked something before:
         if (store.session.get('liked')) {
-          console.log('logged already liked something');
-          console.log(store.session);
           // If user hasn't already liked this tweet.
           if (store.session.get('liked').indexOf(this.model.get('_id')) === -1) {
-            console.log('LIKE TWEET');
             newLikedArr.push(this.model.get('_id'))
             store.session.set('liked', newLikedArr)
             store.session.updateUser()
             like.like()
+            this.$('.like-btn').html(`${numberOfLikes + 1} <i class="fa fa-heart" aria-hidden="true"></i>`).addClass('liked')
           } else {
-            console.log('UNLIKE TWEET');
-            console.log('liked before: ', newLikedArr);
             newLikedArr = _.without(newLikedArr, this.model.get('_id'))
-            console.log('liked after: ', newLikedArr);
             store.session.set('liked', newLikedArr)
             store.session.updateUser()
             like.unlike()
+            this.$('.like-btn').html(`${numberOfLikes - 1} <i class="fa fa-heart" aria-hidden="true"></i>`).removeClass('liked')
           }
           // The user has never liked anything.
         }

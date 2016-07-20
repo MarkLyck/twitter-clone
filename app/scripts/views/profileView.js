@@ -9,12 +9,15 @@ import store from '../store'
 import tweetsCollection from '../collections/tweetsCollection'
 import SingleTweetView from './singleTweetView'
 import userCollection from '../collections/userCollection'
+import followingCollection from '../collections/followingCollection'
+import followersCollection from '../collections/followingCollection'
+import likedCollection from '../collections/likedCollection'
+
+
 
 const ProfileView = Backbone.View.extend({
   initialize: function(username) {
-    // tweetsCollection.on('add', () => this.render())
     tweetsCollection.reset()
-    console.log('FETCHING TWEETS');
     tweetsCollection.fetch({
       url: `https://baas.kinvey.com/appdata/${store.settings.appKey}/tweets/?query={"username":"${username}"}`,
       success: () => {
@@ -26,6 +29,36 @@ const ProfileView = Backbone.View.extend({
       success: response => {
         this.model = response.models[0]
         this.render()
+      }
+    })
+    followingCollection.fetch({
+      url: `https://baas.kinvey.com/user/${store.settings.appKey}/`,
+      data: {
+        query: JSON.stringify({'$or': [{'username': 'ducky'}, {'username': 'testy'}]})
+      },
+      success: () => {
+        // console.log(followingCollection);
+        // this.render()
+      }
+    })
+    // followersCollection.fetch({
+    //   url: `https://baas.kinvey.com/user/${store.settings.appKey}/`,
+    //   data: {
+    //     query: JSON.stringify({'$or': [{'username': 'username'}, {'username': 'username'}]})
+    //   },
+    //   success: () => {
+    //     console.log(followersCollection);
+    //     this.render()
+    //   }
+    // })
+    console.log(store.session.liked);
+    likedCollection.fetch({
+      url: `https://baas.kinvey.com/appdata/${store.settings.appKey}/tweets/`,
+      // data: {
+      //   query: JSON.stringify({'$or:': [{'_id': 'username'}, {'username': 'username'}]})
+      // },
+      success: function(response) {
+        // console.log(response);
       }
     })
   },
@@ -66,67 +99,18 @@ const ProfileView = Backbone.View.extend({
     if (store.session.get('following')) {
       newFollowing = store.session.get('following')
       newFollowing.push(this.model.get('username'))
-      _.uniq(newFollowing)
-      // store.session.set('following', _.uniq(newFollowing))
+      store.session.set('following', _.uniq(newFollowing))
+      this.render()
+      store.session.updateUser()
     }
-
-    // let newFollowers = []
-    // if (profileUser.get('following')) {
-    //   let newFollowers = profileUser.get('followers')
-    //   newFollowers.push(store.session.get('username'))
-    // }
-
-    store.session.save({
-        following: newFollowing
-    }, {
-      type: 'PUT',
-      url: `https://baas.kinvey.com/user/${store.settings.appKey}/${store.session.get('userId')}`,
-      success: (model, response, xhr) => {
-        console.log('UPDATED USER');
-        sessionStorage.session = JSON.stringify(store.session)
-        this.render()
-      },
-      error: function(model, response) {
-        console.log('ERROR: ', arguments);
-      }
-    })
-
-
-
-  //   profileUser.save({
-  //     followers: newFollowers
-  //   },
-  //   {
-  //     type: 'PUT',
-  //     url: `https://baas.kinvey.com/user/${store.settings.appKey}/${profileUser.get('_id')}`,
-  //     success: function(model, response, xhr) {
-  //       console.log('UPDATED OTHER USER');
-  //       router.navigate('user/' + store.session.get('username'), {trigger:true})
-  //     },
-  //     error: function(model, response) {
-  //       console.log('ERROR: ', arguments);
-  //     }
-  //   })
   },
   unFollowUser: function() {
     if (store.session.get('following')) {
       let newFollowing = store.session.get('following')
       newFollowing = _.without(newFollowing, this.model.get('username'))
-
-      store.session.save({
-          following: newFollowing
-      }, {
-        type: 'PUT',
-        url: `https://baas.kinvey.com/user/${store.settings.appKey}/${store.session.get('userId')}`,
-        success: (model, response, xhr) => {
-          console.log('UPDATED USER');
-          sessionStorage.session = JSON.stringify(store.session)
-          this.render()
-        },
-        error: function(model, response) {
-          console.log('ERROR: ', arguments);
-        }
-      })
+      store.session.set('following', _.uniq(newFollowing))
+      this.render()
+      store.session.updateUser()
     } else {
       throw new Error('Couldn\'t find the users you are following')
     }
