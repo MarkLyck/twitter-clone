@@ -13,6 +13,7 @@ import userCollection from '../collections/userCollection'
 const ProfileView = Backbone.View.extend({
   initialize: function(username) {
     // tweetsCollection.on('add', () => this.render())
+    tweetsCollection.reset()
     tweetsCollection.fetch({
       url: `https://baas.kinvey.com/appdata/${store.settings.appKey}/tweets/?query={"username":"${username}"}`,
     })
@@ -23,7 +24,7 @@ const ProfileView = Backbone.View.extend({
         this.render()
       }
     })
-    
+
 
   },
   id: 'profile-container',

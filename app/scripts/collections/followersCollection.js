@@ -4,11 +4,11 @@ import store from '../store'
 import User from '../models/User'
 
 
-let UserCollection = Backbone.Collection.extend({
+let FollowersCollection = Backbone.Collection.extend({
   url: `https://baas.kinvey.com/user/${store.settings.appKey}/`,
   model: User
 });
 
-let userCollection = new UserCollection()
+let followersCollection = new FollowersCollection()
 
-export default userCollection
+export default followersCollection
