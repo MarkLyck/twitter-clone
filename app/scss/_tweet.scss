@@ -4,6 +4,10 @@
   background: #fff;
   padding: 20px;
   color: $primary-text-color;
+  .tweet-user:hover {
+    color: $primary-color;
+    cursor: pointer;
+  }
   .tweet-info {
     display: flex;
     align-items: center;

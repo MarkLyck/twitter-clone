@@ -3,7 +3,9 @@ import Backbone from 'backbone'
 const Session = Backbone.Model.extend({
   urlRoot: `https://baas.kinvey.com/user/kid_By1OAAow/login`,
   defaults: {
-    username: ''
+    username: '',
+    following: [],
+    followers: []
   },
   parse: function(response) {
     if (response) {

@@ -15,8 +15,11 @@ $(document).ajaxSend(function(e, xhrAjax, jqueryAjax) {
 if (sessionStorage.session) {
   store.session.set('authtoken', JSON.parse(sessionStorage.session).authtoken)
   store.session.set('username', JSON.parse(sessionStorage.session).username)
+  store.session.set('email', JSON.parse(sessionStorage.session).email)
   store.session.set('fullName', JSON.parse(sessionStorage.session).fullName)
   store.session.set('userId', JSON.parse(sessionStorage.session).userId)
+  store.session.set('following', JSON.parse(sessionStorage.session).following)
+  store.session.set('followers', JSON.parse(sessionStorage.session).followers)
 }
 
 Backbone.history.start()

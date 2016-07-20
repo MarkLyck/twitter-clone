@@ -49,7 +49,7 @@ const EditProfileView = Backbone.View.extend({
       url: `https://baas.kinvey.com/user/${store.settings.appKey}/${store.session.get('userId')}`,
       success: function(model, response, xhr) {
         console.log(response);
-        router.navigate('feed', {trigger: true})
+        router.navigate('user/' + store.session.get('username'), {trigger:true})
       },
       error: function(model, response) {
         console.log('ERROR: ', arguments);
@@ -57,7 +57,7 @@ const EditProfileView = Backbone.View.extend({
     })
   },
   cancel: function() {
-    router.navigate('feed', {trigger:true})
+    router.navigate('user/' + store.session.get('username'), {trigger:true})
   },
   render: function() {
     this.$el.html(this.template())

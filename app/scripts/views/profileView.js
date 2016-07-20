@@ -1,4 +1,5 @@
 import $ from 'jquery'
+import _ from 'underscore'
 import Backbone from 'backbone'
 import moment from 'moment'
 
@@ -52,10 +53,55 @@ const ProfileView = Backbone.View.extend({
     `
   },
   events: {
-    'click #edit-profile': 'gotoEditProfile'
+    'click #edit-profile': 'gotoEditProfile',
+    'click #follow-user' : 'followUser'
   },
   gotoEditProfile: function() {
     router.navigate('user/' + profileUser.get('username')+'/edit', {trigger:true})
+  },
+  followUser: function() {
+    console.log('FOLLOW', profileUser);
+    let newFollowing = []
+    if (store.session.get('following')) {
+      newFollowing = store.session.get('following')
+      newFollowing.push(profileUser.get('username'))
+      store.session.set('following', _.uniq(newFollowing))
+    }
+
+    // let newFollowers = []
+    // if (profileUser.get('following')) {
+    //   let newFollowers = profileUser.get('followers')
+    //   newFollowers.push(store.session.get('username'))
+    // }
+
+    store.session.save(null, {
+      type: 'PUT',
+      url: `https://baas.kinvey.com/user/${store.settings.appKey}/${store.session.get('userId')}`,
+      success: function(model, response, xhr) {
+        console.log('UPDATED USER');
+        router.navigate('user/' + profileUser.get('username'), {trigger:true})
+      },
+      error: function(model, response) {
+        console.log('ERROR: ', arguments);
+      }
+    })
+
+
+
+  //   profileUser.save({
+  //     followers: newFollowers
+  //   },
+  //   {
+  //     type: 'PUT',
+  //     url: `https://baas.kinvey.com/user/${store.settings.appKey}/${profileUser.get('_id')}`,
+  //     success: function(model, response, xhr) {
+  //       console.log('UPDATED OTHER USER');
+  //       router.navigate('user/' + store.session.get('username'), {trigger:true})
+  //     },
+  //     error: function(model, response) {
+  //       console.log('ERROR: ', arguments);
+  //     }
+  //   })
   },
   render: function() {
     this.$el.html(this.template())
@@ -77,7 +123,7 @@ const ProfileView = Backbone.View.extend({
         let $editProfileBtn = $(`<button id="edit-profile">Edit Profile</button>`)
         this.$('#profile-bar').append($editProfileBtn)
       } else {
-        let $followBtn = $(`<button id="follow-user"><i class="fa fa-user-plus" aria-hidden="true"></i>Follow</button>`)
+        let $followBtn = $(`<button id="follow-user"><i class="fa fa-user-plus" aria-hidden="true"></i> Follow</button>`)
         this.$('#profile-bar').append($followBtn)
       }
     }
