@@ -49,6 +49,7 @@ const EditProfileView = Backbone.View.extend({
       url: `https://baas.kinvey.com/user/${store.settings.appKey}/${store.session.get('userId')}`,
       success: function(model, response, xhr) {
         console.log(response);
+        sessionStorage.session = JSON.stringify(store.session)
         router.navigate('user/' + store.session.get('username'), {trigger:true})
       },
       error: function(model, response) {

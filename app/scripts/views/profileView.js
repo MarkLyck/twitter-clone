@@ -54,18 +54,19 @@ const ProfileView = Backbone.View.extend({
   },
   events: {
     'click #edit-profile': 'gotoEditProfile',
-    'click #follow-user' : 'followUser'
+    'click #follow-user' : 'followUser',
+    'click #unfollow-user' : 'unFollowUser'
   },
   gotoEditProfile: function() {
     router.navigate('user/' + profileUser.get('username')+'/edit', {trigger:true})
   },
   followUser: function() {
-    console.log('FOLLOW', profileUser);
     let newFollowing = []
     if (store.session.get('following')) {
       newFollowing = store.session.get('following')
       newFollowing.push(profileUser.get('username'))
-      store.session.set('following', _.uniq(newFollowing))
+      _.uniq(newFollowing)
+      // store.session.set('following', _.uniq(newFollowing))
     }
 
     // let newFollowers = []
@@ -74,12 +75,15 @@ const ProfileView = Backbone.View.extend({
     //   newFollowers.push(store.session.get('username'))
     // }
 
-    store.session.save(null, {
+    store.session.save({
+        following: newFollowing
+    }, {
       type: 'PUT',
       url: `https://baas.kinvey.com/user/${store.settings.appKey}/${store.session.get('userId')}`,
-      success: function(model, response, xhr) {
+      success: (model, response, xhr) => {
         console.log('UPDATED USER');
-        router.navigate('user/' + profileUser.get('username'), {trigger:true})
+        sessionStorage.session = JSON.stringify(store.session)
+        this.render()
       },
       error: function(model, response) {
         console.log('ERROR: ', arguments);
@@ -103,6 +107,29 @@ const ProfileView = Backbone.View.extend({
   //     }
   //   })
   },
+  unFollowUser: function() {
+    if (store.session.get('following')) {
+      let newFollowing = store.session.get('following')
+      newFollowing = _.without(newFollowing, profileUser.get('username'))
+
+      store.session.save({
+          following: newFollowing
+      }, {
+        type: 'PUT',
+        url: `https://baas.kinvey.com/user/${store.settings.appKey}/${store.session.get('userId')}`,
+        success: (model, response, xhr) => {
+          console.log('UPDATED USER');
+          sessionStorage.session = JSON.stringify(store.session)
+          this.render()
+        },
+        error: function(model, response) {
+          console.log('ERROR: ', arguments);
+        }
+      })
+    } else {
+      throw new Error('Couldn\'t find the users you are following')
+    }
+  },
   render: function() {
     this.$el.html(this.template())
 
@@ -122,9 +149,12 @@ const ProfileView = Backbone.View.extend({
       if (profileUser.get('username') === store.session.get('username')) {
         let $editProfileBtn = $(`<button id="edit-profile">Edit Profile</button>`)
         this.$('#profile-bar').append($editProfileBtn)
-      } else {
-        let $followBtn = $(`<button id="follow-user"><i class="fa fa-user-plus" aria-hidden="true"></i> Follow</button>`)
+      } else if (store.session.get('following').indexOf(profileUser.get('username')) === -1){
+        let $followBtn = $(`<button id="follow-user" class="blue-button"><i class="fa fa-user-plus" aria-hidden="true"></i> Follow</button>`)
         this.$('#profile-bar').append($followBtn)
+      } else {
+        let $unFollowBtn = $(`<button id="unfollow-user" class="blue-button"><i class="fa fa-user-plus" aria-hidden="true"></i>Following</button>`)
+        this.$('#profile-bar').append($unFollowBtn)
       }
     }
 
