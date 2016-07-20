@@ -42,10 +42,10 @@ const LoginView = Backbone.View.extend({
     },
     {
       url: `https://baas.kinvey.com/user/${store.settings.appKey}/`,
-      success: function(model, response, xhr) {
+      success: function(model, response) {
         model.unset('password')
         router.navigate('feed', {trigger: true})
-        sessionStorage.session = JSON.stringify(store.session)
+        localStorage.authtoken = response._kmd.authtoken
       },
       error: function(model, response) {
         console.log('ERROR: ', arguments);

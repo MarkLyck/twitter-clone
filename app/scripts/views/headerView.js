@@ -27,7 +27,8 @@ const HeaderView = Backbone.View.extend({
       url: `https://baas.kinvey.com/user/${store.settings.appKey}/_logout`,
       success: function() {
         store.session.clear()
-        sessionStorage.removeItem('session')
+        // sessionStorage.removeItem('session')
+        localStorage.removeItem('authtoken')
         router.navigate('login', {trigger:true})
       }
     })
@@ -43,7 +44,7 @@ const HeaderView = Backbone.View.extend({
   },
   render: function() {
     this.$el.html(this.template())
-    if (store.session.get('authtoken')) {
+    if (localStorage.getItem('authtoken')) {
       let $logoutBtn = $(`<button id="logout-btn">Logout</button>`)
       let $newTweetBtn = $(`<button id="new-tweet" class="blue-button"><i class="fa fa-pencil-square-o" aria-hidden="true"></i> Tweet</button>`)
       this.$('.wrapper').append($logoutBtn).append($newTweetBtn)

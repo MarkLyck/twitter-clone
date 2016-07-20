@@ -1,4 +1,6 @@
 import Backbone from 'backbone'
+import router from '../router'
+import store from '../store'
 
 const Session = Backbone.Model.extend({
   urlRoot: `https://baas.kinvey.com/user/kid_By1OAAow/login`,
@@ -21,6 +23,32 @@ const Session = Backbone.Model.extend({
         userId: response._id
       }
     }
+  },
+  login: function(username, password) {
+    this.save({username: username,password: password},
+    {
+      success: (model, response) => {
+        this.unset('password')
+        router.navigate('feed', {trigger: true})
+        localStorage.authtoken = response._kmd.authtoken
+      },
+      error: function(model, response) {
+        console.log('ERROR: Login failed');
+      }
+    })
+  },
+  retrieve: function() {
+    console.log('FETCHING USER');
+    this.fetch({
+      url: `https://baas.kinvey.com/user/${store.settings.appKey}/_me`,
+      success: function(response) {
+        console.log('FETCHED USER SUCCESSFULLY');
+        console.log(response);
+      },
+      error: function(response) {
+        throw new Error('FETCHING USER FAILED!')
+      }
+    })
   }
 })
 

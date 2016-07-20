@@ -18,12 +18,6 @@ import tweetsCollection from './collections/tweetsCollection'
 import userCollection from './collections/userCollection'
 
 const Router = Backbone.Router.extend({
-  initialize: function() {
-    this.on('route', function() {
-      tweetsCollection.off()
-      userCollection.off()
-    })
-  },
   routes: {
     login             : 'login',
     signup            : 'signup',
@@ -35,8 +29,9 @@ const Router = Backbone.Router.extend({
     '/*'              : 'feed'
   },
   login: function() {
-    if (store.session.authtoken) {
-      router.navigate('feed', {trigger:true})
+    if (localStorage.getItem('authtoken')) {
+      // store.session.retrieve()
+      this.navigate('feed', {trigger:true})
     } else {
       let headerView = new HeaderView()
       headerView.render()
@@ -53,6 +48,8 @@ const Router = Backbone.Router.extend({
     $('#container').empty().append(signupView.$el)
   },
   feed: function() {
+    tweetsCollection.off()
+    userCollection.off()
     let headerView = new HeaderView()
     headerView.render()
     let feedView = new FeedView()
@@ -71,6 +68,8 @@ const Router = Backbone.Router.extend({
     $('#container').append(editTweetView.$el)
   },
   profile: function(username) {
+    tweetsCollection.off()
+    userCollection.off()
     let headerView = new HeaderView()
     headerView.render()
     let profileView = new ProfileView(username)

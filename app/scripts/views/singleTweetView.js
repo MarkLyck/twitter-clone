@@ -9,12 +9,15 @@ How to get around this without setting the security to "Public"
 
 
 
-/* 2 Can you have multiple collections of the same model? and is that acceptable?
+/* 2 Can you have multiple collections of the same model? and is that good practice?
 
 I have a collection of users, that I use to fetch the user's profile when you go there.
-But, I also need a list of all of that users followers.
+But, I also need a collection of all of that users followers.
 
 Should I make a followersCollection for this?
+
+A better way would be to fetch the users you need, and only "get" all the ones you use for the page.
+But .fetch() seems to always override everything...
 
 */
 

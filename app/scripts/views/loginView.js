@@ -26,20 +26,7 @@ const LoginView = Backbone.View.extend({
     let username = this.$('#username-input').val()
     let password = this.$('#password-input').val()
 
-    store.session.save({
-      username: username,
-      password: password
-    },
-    {
-      success: function(model, response, xhr) {
-        model.unset('password')
-        router.navigate('feed', {trigger: true})
-        sessionStorage.session = JSON.stringify(store.session)
-      },
-      error: function(model, response) {
-        console.log('ERROR: ', arguments);
-      }
-    })
+    store.session.login(username, password)
   },
   gotoSignup: function() {
     router.navigate('signup', {trigger:true})
