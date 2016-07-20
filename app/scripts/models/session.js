@@ -44,9 +44,13 @@ const Session = Backbone.Model.extend({
         throw new Error('FETCHING USER FAILED!')
       }
     })
+  },
+  updateUser: function() {
+    this.save(null, {
+      type: 'PUT',
+      url: `https://baas.kinvey.com/user/${store.settings.appKey}/${this.get('userId')}`,
+    })
   }
 })
-
-// let session = new Session()
 
 export default Session

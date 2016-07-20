@@ -27,7 +27,6 @@ const HeaderView = Backbone.View.extend({
       url: `https://baas.kinvey.com/user/${store.settings.appKey}/_logout`,
       success: function() {
         store.session.clear()
-        // sessionStorage.removeItem('session')
         localStorage.removeItem('authtoken')
         router.navigate('login', {trigger:true})
       }

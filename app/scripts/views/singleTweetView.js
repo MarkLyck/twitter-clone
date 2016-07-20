@@ -73,27 +73,17 @@ const SingleTweetView = Backbone.View.extend({
     like.fetch({
       url: `https://baas.kinvey.com/appdata/${store.settings.appKey}/likes/${currLikeObj._obj._id}`,
       success: () => {
-        console.log('FETCHED LIKE');
-        console.log('store.session: ', store.session);
         let newLikedArr = store.session.get('liked')
         // If the user has liked something before:
         if (store.session.get('liked')) {
-          console.log(store.session.get('liked'));
+          console.log('logged already liked something');
+          console.log(store.session);
           // If user hasn't already liked this tweet.
           if (store.session.get('liked').indexOf(this.model.get('_id')) === -1) {
             console.log('LIKE TWEET');
             newLikedArr.push(this.model.get('_id'))
             store.session.set('liked', newLikedArr)
-            store.session.save(null, {
-              type: 'PUT',
-              url: `https://baas.kinvey.com/user/${store.settings.appKey}/${store.session.get('userId')}`,
-              success: function(model, response, xhr) {
-                console.log('SAVED USER');
-              },
-              error: function(model, response) {
-                console.log('ERROR: ', arguments);
-              }
-            })
+            store.session.updateUser()
             like.like()
           } else {
             console.log('UNLIKE TWEET');
@@ -101,34 +91,10 @@ const SingleTweetView = Backbone.View.extend({
             newLikedArr = _.without(newLikedArr, this.model.get('_id'))
             console.log('liked after: ', newLikedArr);
             store.session.set('liked', newLikedArr)
-            store.session.save(null, {
-              type: 'PUT',
-              url: `https://baas.kinvey.com/user/${store.settings.appKey}/${store.session.get('userId')}`,
-              success: function(model, response, xhr) {
-                console.log('SAVED USER');
-              },
-              error: function(model, response) {
-                console.log('ERROR: ', arguments);
-              }
-            })
+            store.session.updateUser()
             like.unlike()
           }
           // The user has never liked anything.
-        } else {
-          console.log('LIKE FIRST TWEET');
-          newLikedArr.push(this.model.get('_id'))
-          store.session.set('liked', newLikedArr)
-          store.session.save(null, {
-            type: 'PUT',
-            url: `https://baas.kinvey.com/user/${store.settings.appKey}/${store.session.get('userId')}`,
-            success: function(model, response, xhr) {
-              console.log('SAVED USER');
-            },
-            error: function(model, response) {
-              console.log('ERROR: ', arguments);
-            }
-          })
-          like.like()
         }
       },
     })
