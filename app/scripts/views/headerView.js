@@ -25,10 +25,11 @@ const HeaderView = Backbone.View.extend({
   logout: function() {
     store.session.save(null, {
       url: `https://baas.kinvey.com/user/${store.settings.appKey}/_logout`,
-      success: function() {
+      success: () => {
         store.session.clear()
         localStorage.removeItem('authtoken')
-        router.navigate('login', {trigger:true})
+        router.navigate('feed', {trigger:true})
+        this.render()
       }
     })
   },

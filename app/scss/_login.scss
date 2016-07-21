@@ -2,8 +2,12 @@
   display: flex;
   flex-direction: column;
   width: 60%;
+  h3 {
+    padding: 40px;
+  }
   input {
     padding: 20px;
+    border: none;
   }
   .wrapper {
     display: flex;

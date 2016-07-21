@@ -25,7 +25,6 @@ const LoginView = Backbone.View.extend({
   login: function(e) {
     let username = this.$('#username-input').val()
     let password = this.$('#password-input').val()
-
     store.session.login(username, password)
   },
   gotoSignup: function() {

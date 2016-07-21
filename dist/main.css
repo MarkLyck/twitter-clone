@@ -398,8 +398,11 @@ textarea {
   display: flex;
   flex-direction: column;
   width: 60%; }
+  .login-modal h3, .signup-modal h3 {
+    padding: 40px; }
   .login-modal input, .signup-modal input {
-    padding: 20px; }
+    padding: 20px;
+    border: none; }
   .login-modal .wrapper, .signup-modal .wrapper {
     display: flex;
     justify-content: space-around;
