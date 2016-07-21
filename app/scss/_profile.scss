@@ -49,14 +49,14 @@
       margin-left: 40px;
       position: relative;
       #profile-img {
-        height: 200px;
-        width: 200px;
+        height: 10vw;
+        width: 10vw;
         border: 5px solid #fff;
         border-radius: 10px;
         background: url('assets/images/twitter-egg-icon.jpg');
         background-size: contain;
         position: absolute;
-        top: -70%;
+        top: -150px;
       }
       #profile-info {
         margin-top: 20px;
@@ -72,6 +72,7 @@
       }
     }
     .center {
+      margin: 20px;
       flex-grow: 1;
     }
   }
