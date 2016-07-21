@@ -430,8 +430,43 @@ header {
       margin-bottom: 0;
       height: 100%; }
 
-#tweet-list {
-  margin: 20px; }
+#feed-container {
+  display: flex; }
+  #feed-container #tweet-list {
+    margin: 20px; }
+  #feed-container .left {
+    width: 25%;
+    margin: 20px;
+    position: relative; }
+    #feed-container .left .user-box-banner {
+      height: 100px;
+      width: 100%;
+      background: #339CC3;
+      border-top-right-radius: 5px;
+      border-top-left-radius: 5px; }
+    #feed-container .left #profile-img {
+      width: 75px;
+      height: 75px;
+      background: url("assets/images/twitter-egg-icon.jpg");
+      background-size: contain;
+      border: 5px solid #fff;
+      border-radius: 10px;
+      position: absolute;
+      top: 75px;
+      left: 10px; }
+    #feed-container .left #profile-info {
+      padding: 20px;
+      background: #fff; }
+      #feed-container .left #profile-info #profile-full-name {
+        margin-left: calc(20px + 75px);
+        color: #292F33;
+        font-size: 1rem; }
+      #feed-container .left #profile-info #profile-username {
+        margin-left: calc(20px + 75px);
+        color: #8F9FAB;
+        font-size: 0.8rem; }
+  #feed-container .center {
+    flex: 1; }
 
 .tweet-item {
   display: flex;
@@ -454,16 +489,69 @@ header {
   .tweet-item .tweet-options button {
     width: 10%;
     text-align: left; }
+  .tweet-item .tweet-options .liked {
+    color: red; }
 
+#profile-container #profile-banner {
+  height: 300px;
+  /* Permalink - use to edit and share this gradient: http://colorzilla.com/gradient-editor/#59adeb+0,34ce93+99 */
+  background: #59adeb;
+  /* Old browsers */
+  background: -moz-linear-gradient(left, #59adeb 0%, #34ce93 99%);
+  /* FF3.6-15 */
+  background: -webkit-linear-gradient(left, #59adeb 0%, #34ce93 99%);
+  /* Chrome10-25,Safari5.1-6 */
+  background: linear-gradient(to right, #59adeb 0%, #34ce93 99%);
+  /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+  filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#59adeb', endColorstr='#34ce93',GradientType=1 );
+  /* IE6-9 */ }
 #profile-container #profile-bar {
   display: flex;
   justify-content: space-between;
-  padding-left: 20%;
-  padding-right: 20px; }
+  align-items: center;
+  padding-left: 25%;
+  padding-right: 20px;
+  background: #fff;
+  border-bottom: 1px solid #E1E8ED; }
+  #profile-container #profile-bar .wrapper button {
+    padding: 7px 15px; }
+    #profile-container #profile-bar .wrapper button h4 {
+      font-weight: lighter; }
+    #profile-container #profile-bar .wrapper button h3 {
+      color: #339CC3; }
+  #profile-container #profile-bar .wrapper .selected {
+    border-bottom: 5px solid #339CC3; }
+    #profile-container #profile-bar .wrapper .selected h3 {
+      color: #292F33; }
+  #profile-container #profile-bar > button {
+    height: 80%; }
 #profile-container main {
   display: flex; }
   #profile-container main .left {
-    width: 20%; }
+    margin-top: 20px;
+    width: 20%;
+    display: flex;
+    flex-direction: column;
+    margin-left: 40px;
+    position: relative; }
+    #profile-container main .left #profile-img {
+      height: 200px;
+      width: 200px;
+      border: 5px solid #fff;
+      border-radius: 10px;
+      background: url("assets/images/twitter-egg-icon.jpg");
+      background-size: contain;
+      position: absolute;
+      top: -70%; }
+    #profile-container main .left #profile-info {
+      margin-top: 20px;
+      color: #292F33; }
+      #profile-container main .left #profile-info #profile-username {
+        font-size: 0.8rem;
+        color: #8F9FAB;
+        margin-bottom: 10px; }
+      #profile-container main .left #profile-info h4 {
+        font-size: 0.9rem; }
   #profile-container main .center {
     flex-grow: 1; }
 
@@ -475,6 +563,40 @@ header {
     padding: 20px; }
   .edit-profile-modal button {
     padding: 20px; }
+
+.new-tweet-modal, .edit-tweet-modal {
+  width: 60%; }
+  .new-tweet-modal .new-tweet-header, .edit-tweet-modal .new-tweet-header {
+    display: flex;
+    align-items: center;
+    position: relative;
+    justify-content: center; }
+    .new-tweet-modal .new-tweet-header #modal-title, .edit-tweet-modal .new-tweet-header #modal-title {
+      padding: 10px;
+      color: #8899A6;
+      font-weight: normal; }
+    .new-tweet-modal .new-tweet-header button, .edit-tweet-modal .new-tweet-header button {
+      position: absolute;
+      right: 0;
+      padding: 10px; }
+  .new-tweet-modal #modal-body, .edit-tweet-modal #modal-body {
+    background: #E6F3F8;
+    display: flex;
+    flex-direction: column;
+    border-bottom-right-radius: 5px;
+    border-bottom-left-radius: 5px; }
+    .new-tweet-modal #modal-body textarea, .edit-tweet-modal #modal-body textarea {
+      margin: 15px 20px;
+      border: 1px solid #99CDE1;
+      border-radius: 5px;
+      height: 80px; }
+    .new-tweet-modal #modal-body #form-footer, .edit-tweet-modal #modal-body #form-footer {
+      display: flex;
+      align-items: center;
+      justify-content: flex-end; }
+      .new-tweet-modal #modal-body #form-footer #publish-tweet, .new-tweet-modal #modal-body #form-footer #edit-tweet, .edit-tweet-modal #modal-body #form-footer #publish-tweet, .edit-tweet-modal #modal-body #form-footer #edit-tweet {
+        width: 100px;
+        margin: 0 20px 15px 15px; }
 
 body {
   background: #F5F8FA; }
@@ -529,12 +651,10 @@ button {
   width: 100%;
   height: 100%;
   top: 0;
-  background: rgba(0, 0, 0, 0.8); }
+  background: rgba(0, 0, 0, 0.5); }
   #modal-container .modal {
     background: #fff;
     color: #292F33;
     border-radius: 5px; }
-    #modal-container .modal h3 {
-      padding: 40px; }
 
 /*# sourceMappingURL=main.css.map */
