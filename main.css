@@ -476,7 +476,8 @@ header {
   flex-direction: column;
   background: #fff;
   padding: 20px;
-  color: #292F33; }
+  color: #292F33;
+  border: 1px solid #E1E8ED; }
   .tweet-item .tweet-user:hover {
     color: #339CC3;
     cursor: pointer; }
@@ -538,14 +539,14 @@ header {
     margin-left: 40px;
     position: relative; }
     #profile-container main .left #profile-img {
-      height: 200px;
-      width: 200px;
+      height: 10vw;
+      width: 10vw;
       border: 5px solid #fff;
       border-radius: 10px;
       background: url("assets/images/twitter-egg-icon.jpg");
       background-size: contain;
       position: absolute;
-      top: -70%; }
+      top: -150px; }
     #profile-container main .left #profile-info {
       margin-top: 20px;
       color: #292F33; }
@@ -556,6 +557,7 @@ header {
       #profile-container main .left #profile-info h4 {
         font-size: 0.9rem; }
   #profile-container main .center {
+    margin: 20px;
     flex-grow: 1; }
 
 .edit-profile-modal {
