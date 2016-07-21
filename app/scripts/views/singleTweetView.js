@@ -75,24 +75,23 @@ const SingleTweetView = Backbone.View.extend({
         let numberOfLikes = like.get('likes')
         let newLikedArr = store.session.get('liked')
         // If the user has liked something before:
-        if (store.session.get('liked')) {
+        // if (store.session.get('liked')) {
           // If user hasn't already liked this tweet.
           if (store.session.get('liked').indexOf(this.model.get('_id')) === -1) {
             newLikedArr.push(this.model.get('_id'))
             store.session.set('liked', newLikedArr)
             store.session.updateUser()
             like.like()
-            this.$('.like-btn').html(`${numberOfLikes + 1} <i class="fa fa-heart" aria-hidden="true"></i>`).addClass('liked')
+            this.$('.like-btn').html(`<i class="fa fa-heart" aria-hidden="true"></i> ${numberOfLikes + 1}`).addClass('liked')
           } else {
             newLikedArr = _.without(newLikedArr, this.model.get('_id'))
             store.session.set('liked', newLikedArr)
             store.session.updateUser()
             like.unlike()
-            this.$('.like-btn').html(`${numberOfLikes - 1} <i class="fa fa-heart" aria-hidden="true"></i>`).removeClass('liked')
+            this.$('.like-btn').html(`<i class="fa fa-heart" aria-hidden="true"></i> ${numberOfLikes - 1}`).removeClass('liked')
           }
           // The user has never liked anything.
         }
-      },
     })
 
 
@@ -100,7 +99,10 @@ const SingleTweetView = Backbone.View.extend({
   render: function() {
     this.$el.html(this.template())
     if (this.model.get('likes')._obj) {
-      this.$('.like-btn').html(`${this.model.get('likes')._obj.likes} <i class="fa fa-heart" aria-hidden="true"></i>`)
+      this.$('.like-btn').html(`<i class="fa fa-heart" aria-hidden="true"></i> ${this.model.get('likes')._obj.likes}`)
+    }
+    if (store.session.get('liked').indexOf(this.model.get('_id')) !== -1) {
+      this.$('.like-btn').addClass('liked')
     }
     if (this.model.get('username') === store.session.get('username')) {
       let $delBtn = $(`<button class="del-btn"><i class="fa fa-trash" aria-hidden="true"></i></button>`)

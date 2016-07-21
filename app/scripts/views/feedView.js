@@ -13,16 +13,28 @@ const FeedView = Backbone.View.extend({
     tweetsCollection.on('remove', () => this.render())
 
     tweetsCollection.fetch()
+    store.session.fetch({
+      url: `https://baas.kinvey.com/user/${store.settings.appKey}/_me`,
+      success: (response) => {
+        this.render()
+      }
+    })
   },
   id: 'feed-container',
   template: function() {
+    console.log(store.session);
     return `
     <div class="left user-box">
       <div class="user-box-banner"></div>
-      <div class="user-box-banner"></div>
+      <div id="profile-img"></div>
+      <div id="profile-info">
+        <h2 id="profile-full-name">${store.session.get('fullName')}</h2>
+        <h3 id="profile-username">@${store.session.get('username')}</h3>
+      </div>
     </div>
-    <ul id="tweet-list">
+    <ul id="tweet-list" class="center">
     </ul>
+    <div class="right"></div>
     `
   },
   render: function() {

@@ -13,16 +13,21 @@ const NewTweetView = Backbone.View.extend({
     return `
     <div class="new-tweet-modal modal">
       <div class="new-tweet-header">
-        <h3>Compose new tweet</h3>
+        <h3 id="modal-title">Compose new Tweet</h3>
         <button class="close-btn">X</button>
       </div>
-      <textarea id="tweet-textarea" placeholder="body text"></textarea>
-      <button id="publish-tweet">Tweet!</button>
+      <div id="modal-body">
+        <textarea id="tweet-textarea" placeholder="body text"></textarea>
+        <div id="form-footer">
+          <button id="publish-tweet" class="blue-button">Tweet!</button>
+        </div>
+      </div>
     </div>
     `
   },
   events: {
-    'click #publish-tweet': 'publishTweet'
+    'click #publish-tweet': 'publishTweet',
+    'click .close-btn'    : 'close'
   },
   publishTweet: function(e) {
     let bodyText = this.$('#tweet-textarea').val()
@@ -46,7 +51,9 @@ const NewTweetView = Backbone.View.extend({
         })
       }
     })
-
+  },
+  close: function() {
+    router.navigate('feed', {trigger:true})
   },
   render: function() {
     this.$el.html(this.template())

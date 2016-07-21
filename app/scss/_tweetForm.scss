@@ -1,0 +1,42 @@
+.new-tweet-modal, .edit-tweet-modal {
+  width: 60%;
+  .new-tweet-header {
+    display: flex;
+    align-items: center;
+    position: relative;
+    justify-content: center;
+    #modal-title {
+      padding: 10px;
+      color: #8899A6;
+      font-weight: normal;
+    }
+    button {
+      position: absolute;
+      right: 0;
+      padding: 10px;
+    }
+  }
+  #modal-body {
+    background: #E6F3F8;
+    display: flex;
+    flex-direction: column;
+    border-bottom-right-radius: 5px;
+    border-bottom-left-radius: 5px;
+    textarea {
+      margin: 15px 20px;
+      border: 1px solid #99CDE1;
+      border-radius: 5px;
+      height: 80px;
+    }
+    #form-footer {
+      display: flex;
+      align-items: center;
+      justify-content: flex-end;
+      #publish-tweet, #edit-tweet {
+        width: 100px;
+        margin: 0 20px 15px 15px;
+      }
+    }
+
+  }
+}

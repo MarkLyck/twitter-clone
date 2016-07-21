@@ -51,23 +51,31 @@ const ProfileView = Backbone.View.extend({
     //     this.render()
     //   }
     // })
-    console.log(store.session.liked);
+
+    console.log(store.session.get('liked'));
+    let likeQueryArray = store.session.get('liked').map(function(likeID) {
+      return {'_id': likeID}
+    })
+
     likedCollection.fetch({
       url: `https://baas.kinvey.com/appdata/${store.settings.appKey}/tweets/`,
-      // data: {
-      //   query: JSON.stringify({'$or:': [{'_id': 'username'}, {'username': 'username'}]})
-      // },
+      data: {
+        query: JSON.stringify({$or: likeQueryArray})
+      },
       success: function(response) {
-        // console.log(response);
+        console.log('FETCHED LIKED COLLECTION');
+        console.log(response);
       }
     })
   },
   id: 'profile-container',
   template: function() {
     return `
+    <div id="profile-banner">
+    </div>
     <div id="profile-bar">
       <div class="wrapper">
-        <button id="profile-tweets"><h4>Tweets</h4></button>
+        <button id="profile-tweets" class="selected"><h4>Tweets</h4></button>
         <button id="profile-following"><h4>Following</h4></button>
         <button id="profile-followers"><h4>Followers</h4></button>
         <button id="profile-likes"><h4>Likes</h4></button>
@@ -75,10 +83,13 @@ const ProfileView = Backbone.View.extend({
     </div>
     <main>
       <div class="left sidebar">
-        <h2 id="profile-full-name"></h2>
-        <h3 id="profile-username"></h3>
-        <h4 id="profile-location"></h4>
-        <h4 id="profile-joined"></h4>
+        <div id="profile-img"></div>
+        <div id="profile-info">
+          <h2 id="profile-full-name"></h2>
+          <h3 id="profile-username"></h3>
+          <h4 id="profile-location"></h4>
+          <h4 id="profile-joined"></h4>
+        </div>
       </div>
       <div class="center">
         <ul id="tweet-list"></ul>
@@ -126,11 +137,13 @@ const ProfileView = Backbone.View.extend({
 
       let $TweetNumber = $(`<h3>${tweetsCollection.length}</h3>`)
       let $FollowingNumber = $(`<h3>${this.model.get('following').length}</h3>`)
-      // let $FollowersNumber = $(`<h3>${profileUser.get('followers').length}</h3>`)
-      // let $LikesNumber = $(`<h3>${profileUser.get('likes').length}</h3>`)
+      let $FollowersNumber = $(`<h3>${this.model.get('followers').length}</h3>`)
+      let $LikesNumber = $(`<h3>${this.model.get('liked').length}</h3>`)
 
       this.$('#profile-tweets').append($TweetNumber)
       this.$('#profile-following').append($FollowingNumber)
+      this.$('#profile-followers').append($FollowersNumber)
+      this.$('#profile-likes').append($LikesNumber)
 
       if (this.model.get('username') === store.session.get('username')) {
         let $editProfileBtn = $(`<button id="edit-profile">Edit Profile</button>`)

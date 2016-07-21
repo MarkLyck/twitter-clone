@@ -1,3 +1,48 @@
-#tweet-list {
-  margin: 20px;
+#feed-container {
+  display: flex;
+
+  #tweet-list {
+    margin: 20px;
+  }
+  .left {
+    width: 25%;
+    margin: 20px;
+    position: relative;
+    .user-box-banner {
+      height: 100px;
+      width: 100%;
+      background: $primary-color;
+      border-top-right-radius: 5px;
+      border-top-left-radius: 5px;
+    }
+    #profile-img {
+      width: 75px;
+      height: 75px;
+      background: url('assets/images/twitter-egg-icon.jpg');
+      background-size: contain;
+      border: 5px solid #fff;
+      border-radius: 10px;
+      position: absolute;
+      top: 75px;
+      left: 10px;
+    }
+    #profile-info {
+      padding: 20px;
+      background: #fff;
+      #profile-full-name {
+        margin-left: calc(20px + 75px);
+        color: $primary-text-color;
+        font-size: 1rem;
+      }
+      #profile-username {
+        margin-left: calc(20px + 75px);
+        color: $secondary-text-color;
+        font-size: 0.8rem;
+      }
+    }
+  }
+  .center {
+    flex: 1;
+  }
+
 }
