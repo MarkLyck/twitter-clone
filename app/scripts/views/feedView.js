@@ -12,13 +12,17 @@ const FeedView = Backbone.View.extend({
     tweetsCollection.on('add', (model) => this.addTweet(model))
     tweetsCollection.on('remove', () => this.render())
 
-    tweetsCollection.fetch()
-    store.session.fetch({
-      url: `https://baas.kinvey.com/user/${store.settings.appKey}/_me`,
-      success: (response) => {
-        this.render()
-      }
-    })
+    if (localStorage.authtoken) {
+      tweetsCollection.fetch()
+      store.session.fetch({
+        url: `https://baas.kinvey.com/user/${store.settings.appKey}/_me`,
+        success: (response) => {
+          this.render()
+        }
+      })
+    }
+
+
   },
   id: 'feed-container',
   template: function() {

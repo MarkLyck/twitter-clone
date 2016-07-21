@@ -29,10 +29,13 @@ const Router = Backbone.Router.extend({
     '/*'              : 'feed'
   },
   login: function() {
+    console.log('login function');
     if (localStorage.getItem('authtoken')) {
+      console.log('Navigate to feed instead');
       // store.session.retrieve()
       this.navigate('feed', {trigger:true})
     } else {
+      console.log('rendering login part');
       let headerView = new HeaderView()
       headerView.render()
       let feedView = new FeedView()

@@ -28,7 +28,7 @@ const HeaderView = Backbone.View.extend({
       success: () => {
         store.session.clear()
         localStorage.removeItem('authtoken')
-        router.navigate('feed', {trigger:true})
+        // router.navigate('feed', {trigger:true})
         this.render()
       }
     })

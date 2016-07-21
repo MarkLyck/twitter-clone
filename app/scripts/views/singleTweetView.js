@@ -1,20 +1,3 @@
-/* 3, how do you get models, based on a query in an array!?!?!?!
-
-  E.g.
-
-  Following: ['nicerhugs', 'testy', 'someotherusername']
-
-  I need to get those 3 users :(
-*/
-
-
-
-
-
-/* 4
-  Users that aren't logged in, are also not allowed to read tweets :(
-*/
-
 
 import $ from 'jquery'
 import _ from 'underscore'
@@ -101,8 +84,10 @@ const SingleTweetView = Backbone.View.extend({
     if (this.model.get('likes')._obj) {
       this.$('.like-btn').html(`<i class="fa fa-heart" aria-hidden="true"></i> ${this.model.get('likes')._obj.likes}`)
     }
-    if (store.session.get('liked').indexOf(this.model.get('_id')) !== -1) {
-      this.$('.like-btn').addClass('liked')
+    if (store.session.get('liked')) {
+      if (store.session.get('liked').indexOf(this.model.get('_id')) !== -1) {
+        this.$('.like-btn').addClass('liked')
+      }
     }
     if (this.model.get('username') === store.session.get('username')) {
       let $delBtn = $(`<button class="del-btn"><i class="fa fa-trash" aria-hidden="true"></i></button>`)
